@@ -9,11 +9,40 @@ single host application file**. Updates are discovered via a marketplace
 manifest contract and install automatically.
 
 - Namespace: `Salienture\Plugins\`
-- Composer package: `salienture/plugins` (official packages register through composer only)
+- Composer package: `salienture/salienture-laravel-plugins-plugin`
 - Author: [Salienture](https://salienture.com)
 - License: MIT
 
 ---
+
+## Installation
+
+Install via Composer:
+
+```bash
+composer require salienture/salienture-laravel-plugins-plugin
+```
+
+The service provider is auto-discovered by Laravel. Once installed:
+
+1. Create a `plugins/` directory at your project root (or configure a custom path in `config/salienture-plugins.php`).
+2. Drop plugin folders into `plugins/<vendor>/<name>/`.
+3. Visit `/admin/plugins` to activate and manage your plugins.
+
+### Requirements
+
+- PHP 8.3+
+- Laravel 13.0+
+
+### Frontend setup (Inertia only)
+
+If you use Inertia, add one resolver line in your frontend entry (`resources/js/app.tsx`) to enable plugin page resolution:
+
+```ts
+import { resolvePage } from '@/lib/inertia-pages';
+```
+
+This function globs both host and plugin page directories automatically.
 
 ## Unified plugin layout (frontend-agnostic)
 
