@@ -1,4 +1,4 @@
-# Salienture Plugins
+# Salienture Laravel Plugins plugin
 
 WordPress-style **plug-and-play plugin system** for Laravel apps with any
 frontend stack (Inertia/React, Inertia/Vue, Livewire).

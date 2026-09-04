@@ -1,5 +1,5 @@
 {
-    "name": "laravel-plugins-plugin",
+    "name": "salienture-laravel-plugins-plugin",
     "description": "WordPress-style plug-and-play plugin system for Laravel: discovery, activation, unified multi-frontend pages, updates and auto-updates.",
     "license": "MIT",
     "type": "library",
@@ -31,6 +31,11 @@
                 "Salienture\\Plugins\\PluginsServiceProvider"
             ]
         }
+    },
+    "support": {
+        "issues": "https://github.com/salienture/salienture-laravel-plugins-plugin/issues",
+        "source": "https://github.com/salienture/salienture-laravel-plugins-plugin",
+        "changelog": "https://github.com/salienture/salienture-laravel-plugins-plugin/blob/main/CHANGELOG.md"
     },
     "minimum-stability": "stable",
     "prefer-stable": true
