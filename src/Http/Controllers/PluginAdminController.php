@@ -31,7 +31,7 @@ class PluginAdminController
             'autoUpdateGloballyEnabled' => (bool) config('plugins.auto_update.enabled', true),
             'updatesPending' => $manager->all()->where('updateAvailable', true)->count(),
             'maxUploadKb' => (int) config('plugins.upload.max_size_kb', 51200),
-            'trash' => $manager->trashItems(),
+            'trash' => (array) $manager->trashItems(),
         ]);
     }
 

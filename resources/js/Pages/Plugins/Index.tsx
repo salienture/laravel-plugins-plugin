@@ -1,4 +1,4 @@
-import { Link, router, usePage } from '@inertiajs/react';
+import { router, usePage } from '@inertiajs/react';
 import { useMemo, useRef, useState } from 'react';
 
 interface Plugin {
@@ -41,6 +41,9 @@ interface Props {
 
 type Filter = 'all' | 'active' | 'inactive' | 'updates';
 
+const asArray = <T,>(value: T[] | undefined | null): T[] =>
+    Array.isArray(value) ? value : [];
+
 export default function PluginsIndex({
     canManagePlugins,
     plugins,
@@ -56,10 +59,13 @@ export default function PluginsIndex({
     const [uploading, setUploading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
+    const pluginList = asArray(plugins);
+    const trashList = asArray(trash);
+
     const filtered = useMemo(() => {
         const needle = query.trim().toLowerCase();
 
-        return plugins.filter((plugin) => {
+        return pluginList.filter((plugin) => {
             if (filter === 'active' && !plugin.isActive) return false;
             if (filter === 'inactive' && plugin.isActive) return false;
             if (filter === 'updates' && !plugin.updateAvailable) return false;
@@ -75,14 +81,14 @@ export default function PluginsIndex({
 
             return haystack.includes(needle);
         });
-    }, [plugins, query, filter]);
+    }, [pluginList, query, filter]);
 
     const counts = useMemo(() => ({
-        all: plugins.length,
-        active: plugins.filter((p) => p.isActive).length,
-        inactive: plugins.filter((p) => !p.isActive).length,
-        updates: plugins.filter((p) => p.updateAvailable).length,
-    }), [plugins]);
+        all: pluginList.length,
+        active: pluginList.filter((p) => p.isActive).length,
+        inactive: pluginList.filter((p) => !p.isActive).length,
+        updates: pluginList.filter((p) => p.updateAvailable).length,
+    }), [pluginList]);
 
     function toggle(plugin: Plugin) {
         router.post(`/plugins/${plugin.slug}/toggle`);
@@ -317,7 +323,7 @@ export default function PluginsIndex({
                 </div>
             )}
 
-            {trash.length > 0 && (
+            {trashList.length > 0 && (
                 <div className="mt-10">
                     <div className="mb-3 flex items-center justify-between">
                         <h2 className="text-lg font-semibold">Trash</h2>
@@ -340,7 +346,7 @@ export default function PluginsIndex({
                                 </tr>
                             </thead>
                             <tbody>
-                                {trash.map((item) => (
+                                {trashList.map((item) => (
                                     <tr key={item.folder} className="border-t border-gray-100">
                                         <td className="px-4 py-2">
                                             <span className="font-medium">{item.name}</span>

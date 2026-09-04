@@ -49,17 +49,20 @@ const uploading = ref(false);
 const error = ref<string | null>(null);
 const fileInput = ref<HTMLInputElement | null>(null);
 
+const pluginList = computed(() => (Array.isArray(props.plugins) ? props.plugins : []));
+const trashList = computed(() => (Array.isArray(props.trash) ? props.trash : []));
+
 const counts = computed(() => ({
-    all: props.plugins.length,
-    active: props.plugins.filter((p) => p.isActive).length,
-    inactive: props.plugins.filter((p) => !p.isActive).length,
-    updates: props.plugins.filter((p) => p.updateAvailable).length,
+    all: pluginList.value.length,
+    active: pluginList.value.filter((p) => p.isActive).length,
+    inactive: pluginList.value.filter((p) => !p.isActive).length,
+    updates: pluginList.value.filter((p) => p.updateAvailable).length,
 }));
 
 const filtered = computed(() => {
     const needle = query.value.trim().toLowerCase();
 
-    return props.plugins.filter((plugin) => {
+    return pluginList.value.filter((plugin) => {
         if (filter.value === 'active' && !plugin.isActive) return false;
         if (filter.value === 'inactive' && plugin.isActive) return false;
         if (filter.value === 'updates' && !plugin.updateAvailable) return false;
@@ -304,7 +307,7 @@ function autoUpdateLabel(value: boolean | null): string {
             No plugins match your current search or filter.
         </div>
 
-        <div v-if="trash.length > 0" class="mt-10">
+        <div v-if="trashList.length > 0" class="mt-10">
             <div class="mb-3 flex items-center justify-between">
                 <h2 class="text-lg font-semibold">Trash</h2>
                 <button
@@ -326,7 +329,7 @@ function autoUpdateLabel(value: boolean | null): string {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="item in trash" :key="item.folder" class="border-t border-gray-100">
+                        <tr v-for="item in trashList" :key="item.folder" class="border-t border-gray-100">
                             <td class="px-4 py-2">
                                 <span class="font-medium">{{ item.name }}</span>
                                 <span class="ml-2 text-xs text-gray-400">{{ item.slug }}</span>
