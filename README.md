@@ -181,7 +181,7 @@ Publishable via `php artisan vendor:publish --tag=salienture-plugins-config`.
 
 ## Reference implementation
 
-[`plugins/salienture/todo`](../../plugins/salienture/todo/README.md) demonstrates
+[`https://github.com/salienture/laravel-todo-plugin`](https://github.com/salienture/laravel-todo-plugin) demonstrates
 the complete layout: header, lifecycle class, CRUD + ownership rules,
 self-namespaced React page, factory-in-src convention, in-plugin Pest suite,
 CHANGELOG and ADRs.
