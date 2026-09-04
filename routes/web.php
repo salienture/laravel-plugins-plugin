@@ -4,13 +4,13 @@ use Illuminate\Support\Facades\Route;
 use Salienture\Plugins\Http\Controllers\PluginAdminController;
 
 /**
- * Plugin administration area: management page plus activate/deactivate,
+ * Plugin management area: management page plus activate/deactivate,
  * auto-update preference, update check and update install endpoints.
  * Every route requires auth, verification and the "managePlugins" ability.
  */
 Route::middleware(['web', 'auth', 'verified'])
-    ->prefix('admin/plugins')
-    ->name('admin.plugins.')
+    ->prefix('plugins')
+    ->name('plugins.')
     ->group(function (): void {
         Route::get('/', [PluginAdminController::class, 'index'])->name('index');
 

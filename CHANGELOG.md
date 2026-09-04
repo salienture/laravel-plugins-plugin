@@ -16,9 +16,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   interrupted.
 - Old plugin versions are removed instantly after a successful
   replacement install or update (no leftover backup folders).
+- The plugin manager page now ships inside this package as a publishable
+  resource: `php artisan vendor:publish --tag=salienture-plugins-pages`
+  copies a `Plugins/Index` component (React and Vue variants) into the
+  host's `resources/js/Pages/` — the manager is no longer part of the host
+  application.
 
 ### Changed
 
+- Plugin management routes now live at `/plugins` (previously
+  `/admin/plugins`); the routes file was renamed from `admin.php` to the
+  conventional `web.php`.
+- The controller now renders the `Plugins/Index` Inertia component (from
+  the published resources) instead of a host-owned `plugins` page.
 - Upload failures now surface the exact scanner reasons inline in the
   installing card (validation errors) instead of a generic message.
 
@@ -32,14 +42,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   (entry names, symlink entries, extension allow-list, nested archives,
   sensitive files, size/file-count caps) plus a PHP content scan for
   obfuscation and webshell primitives — rejected archives are never extracted.
-- Live installation preview on `/admin/plugins`: an installing card inside the
+- Live installation preview on `/plugins`: an installing card inside the
   plugin grid with a progress bar and per-step status, after client-side
   structure checks (zip type, empty file, size limit).
-- Search and dropdown status filtering on the plugin management page.
 
 ### Planned
 
-- Salienture marketplace integration (browse + one-click install from `/admin/plugins`).
+- Salienture marketplace integration (browse + one-click install from `/plugins`).
 - Menus plugin consuming plugin `navigation()` hooks for dynamic sidebar management.
 - `requires` enforcement from update manifests before installing.
 - Plugin uninstall (data removal) alongside the existing deactivate-keeps-data flow.
@@ -60,7 +69,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `resources/js/react|vue/pages` / Livewire views and pages resolve in place,
   self-namespaced as `<vendor>/<name>/<page>` — never copied into host
   resources.
-- Admin area at `/admin/plugins`: activate/deactivate, per-plugin auto-update
+- Admin area at `/plugins`: activate/deactivate, per-plugin auto-update
   preference (global default -> on -> off), update-now, check-updates,
   pending-update alert, author/version/license metadata display.
 - Update channel: manifest contract (URL or `path://` stream), version

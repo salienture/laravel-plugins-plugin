@@ -190,12 +190,12 @@ test('the admin update endpoint installs pending updates', function () {
     $user = User::factory()->create();
 
     // Activate through HTTP so the record exists with sane defaults.
-    $this->actingAs($user)->post('/admin/plugins/salienture/todo/toggle');
+    $this->actingAs($user)->post('/plugins/salienture/todo/toggle');
 
     app(Updater::class)->check();
 
     $this->actingAs($user)
-        ->post('/admin/plugins/salienture/todo/update')
+        ->post('/plugins/salienture/todo/update')
         ->assertRedirect();
 
     expect(PluginRecord::query()->where('slug', 'salienture/todo')->value('version'))->toBe('2.1.0');

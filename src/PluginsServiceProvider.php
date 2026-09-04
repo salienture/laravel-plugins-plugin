@@ -56,12 +56,16 @@ class PluginsServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        $this->loadRoutesFrom(__DIR__.'/../routes/admin.php');
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__.'/../config/plugins.php' => config_path('plugins.php'),
             ], 'salienture-plugins-config');
+
+            $this->publishes([
+                __DIR__.'/../resources/js/Pages' => resource_path('js/Pages'),
+            ], 'salienture-plugins-pages');
 
             $this->commands([
                 ListPluginsCommand::class,

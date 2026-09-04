@@ -32,10 +32,10 @@ test('admin can open the plugins management page', function () {
     $user = User::factory()->create();
 
     $this->actingAs($user)
-        ->get('/admin/plugins')
+        ->get('/plugins')
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page
-            ->component('admin/plugins')
+            ->component('Plugins/Index')
             ->where('canManagePlugins', true)
             ->has('plugins', 2)
             ->where('plugins.0.slug', 'salienture/notes')
@@ -44,7 +44,7 @@ test('admin can open the plugins management page', function () {
 });
 
 test('guests cannot open the plugins management page', function () {
-    $this->get('/admin/plugins')->assertRedirect('/login');
+    $this->get('/plugins')->assertRedirect('/login');
 });
 
 test('toggling activates the plugin, runs its migrations and deactivation keeps data', function () {
@@ -52,13 +52,13 @@ test('toggling activates the plugin, runs its migrations and deactivation keeps 
 
     expect(Schema::hasTable('todos'))->toBeFalse();
 
-    $this->actingAs($user)->post('/admin/plugins/salienture/todo/toggle');
+    $this->actingAs($user)->post('/plugins/salienture/todo/toggle');
 
     expect(app(PluginManager::class)->find('salienture/todo')['isActive'])->toBeTrue()
         ->and(Schema::hasTable('todos'))->toBeTrue();
 
     // Deactivate again - WordPress semantics: keep data around.
-    $this->actingAs($user)->post('/admin/plugins/salienture/todo/toggle');
+    $this->actingAs($user)->post('/plugins/salienture/todo/toggle');
 
     expect(app(PluginManager::class)->find('salienture/todo')['isActive'])->toBeFalse()
         ->and(Schema::hasTable('todos'))->toBeTrue();
@@ -68,6 +68,6 @@ test('toggling an unknown slug 404s', function () {
     $user = User::factory()->create();
 
     $this->actingAs($user)
-        ->post('/admin/plugins/salienture/missing/toggle')
+        ->post('/plugins/salienture/missing/toggle')
         ->assertNotFound();
 });

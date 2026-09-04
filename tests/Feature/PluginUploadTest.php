@@ -206,7 +206,7 @@ test('the admin upload endpoint installs plugins via http', function () {
     $user = User::factory()->create();
 
     $this->actingAs($user)
-        ->post('/admin/plugins/upload', [
+        ->post('/plugins/upload', [
             'plugin' => uploadedArchive($zip),
         ])
         ->assertRedirect();
@@ -216,7 +216,7 @@ test('the admin upload endpoint installs plugins via http', function () {
 });
 
 test('guests cannot upload plugins', function () {
-    $this->post('/admin/plugins/upload')->assertRedirect('/login');
+    $this->post('/plugins/upload')->assertRedirect('/login');
 });
 
 test('single folder archives resolve their slug from the namespace header', function () {

@@ -15,7 +15,7 @@ use Salienture\Plugins\Support\Updater;
 use Throwable;
 
 /**
- * Admin controller behind /admin/plugins: renders the management page and
+ * Controller behind /plugins: renders the management page and
  * handles activation, auto-update preference, update checks and installs.
  */
 class PluginAdminController
@@ -25,7 +25,7 @@ class PluginAdminController
      */
     public function index(PluginManager $manager): Response
     {
-        return Inertia::render('admin/plugins', [
+        return Inertia::render('Plugins/Index', [
             'canManagePlugins' => Gate::allows((string) config('plugins.gate')),
             'plugins' => $manager->all(),
             'autoUpdateGloballyEnabled' => (bool) config('plugins.auto_update.enabled', true),

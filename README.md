@@ -3,7 +3,7 @@
 WordPress-style **plug-and-play plugin system** for Laravel apps with any
 frontend stack (Inertia/React, Inertia/Vue, Livewire).
 
-Drop a folder into `plugins/`, activate it from `/admin/plugins`, and it
+Drop a folder into `plugins/`, activate it from `/plugins`, and it
 contributes routes, migrations, pages and menu entries — **without touching a
 single host application file**. Updates are discovered via a marketplace
 manifest contract and install automatically.
@@ -27,7 +27,7 @@ The service provider is auto-discovered by Laravel. Once installed:
 
 1. Create a `plugins/` directory at your project root (or configure a custom path in `config/salienture-plugins.php`).
 2. Drop plugin folders into `plugins/<vendor>/<name>/`.
-3. Visit `/admin/plugins` to activate and manage your plugins.
+3. Visit `/plugins` to activate and manage your plugins.
 
 ### Requirements
 
@@ -36,7 +36,22 @@ The service provider is auto-discovered by Laravel. Once installed:
 
 ### Frontend setup (Inertia only)
 
-If you use Inertia, add one resolver line in your frontend entry (`resources/js/app.tsx`) to enable plugin page resolution:
+The plugin manager page ships with this package. Publish it into your host's
+resources (choose the variant matching your stack):
+
+```bash
+# Publish the React + TypeScript page
+php artisan vendor:publish --tag=salienture-plugins-pages
+#   -> resources/js/Pages/Plugins/Index.tsx (React)
+#   -> resources/js/Pages/Plugins/Index.vue  (Vue)
+```
+
+The page component is named `Plugins/Index` — Inertia resolves it from the
+controller's `Inertia::render('Plugins/Index', ...)`. No other host wiring is
+required for the management page.
+
+To also resolve **plugin** pages (the plugins you install) in place, add one
+resolver line in your frontend entry (`resources/js/app.tsx`):
 
 ```ts
 import { resolvePage } from '@/lib/inertia-pages';
@@ -113,7 +128,10 @@ By design the core requires almost nothing from the host app:
 
 1. Composer autoload mapping (`Salienture\Plugins\` -> `packages/plugins/src`)
    and one provider registration — this is how official packages install.
-2. One resolver line in the frontend entry (`resources/js/app.tsx`) pointing at
+2. Publish the plugin manager page (`php artisan vendor:publish
+   --tag=salienture-plugins-pages`) so its component lands in your host's
+   `resources/js/Pages/Plugins/`.
+3. One resolver line in the frontend entry (`resources/js/app.tsx`) pointing at
    `resolvePage()` from `resources/js/lib/inertia-pages.ts`, which globs both
    host pages and plugin pages.
 
@@ -124,7 +142,7 @@ Scheduling of updates lives inside the package provider — no host cron wiring.
 
 ## Admin area
 
-Visit `/admin/plugins` (authenticated + verified; gate `managePlugins`,
+Visit `/plugins` (authenticated + verified; gate `managePlugins`,
 overridable):
 
 - **Search** by name, slug, description or author.
