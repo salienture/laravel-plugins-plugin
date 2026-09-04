@@ -1,5 +1,5 @@
 {
-    "name": "salienture/plugins",
+    "name": "laravel-plugins-plugin",
     "description": "WordPress-style plug-and-play plugin system for Laravel: discovery, activation, unified multi-frontend pages, updates and auto-updates.",
     "license": "MIT",
     "type": "library",
