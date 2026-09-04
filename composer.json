@@ -1,0 +1,37 @@
+{
+    "name": "salienture/plugins",
+    "description": "WordPress-style plug-and-play plugin system for Laravel: discovery, activation, unified multi-frontend pages, updates and auto-updates.",
+    "license": "MIT",
+    "type": "library",
+    "keywords": [
+        "laravel",
+        "salienture",
+        "plugins"
+    ],
+    "authors": [
+        {
+            "name": "Salienture",
+            "email": "hello@salienture.com",
+            "homepage": "https://salienture.com"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "illuminate/contracts": "^13.0",
+        "illuminate/support": "^13.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Salienture\\Plugins\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Salienture\\Plugins\\PluginsServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
