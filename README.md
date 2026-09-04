@@ -9,7 +9,7 @@ single host application file**. Updates are discovered via a marketplace
 manifest contract and install automatically.
 
 - Namespace: `Salienture\Plugins\`
-- Composer package: `salienture/salienture-laravel-plugins-plugin`
+- Composer package: `salienture/laravel-plugins-plugin`
 - Author: [Salienture](https://salienture.com)
 - License: MIT
 
@@ -20,7 +20,7 @@ manifest contract and install automatically.
 Install via Composer:
 
 ```bash
-composer require salienture/salienture-laravel-plugins-plugin
+composer require salienture/laravel-plugins-plugin
 ```
 
 The service provider is auto-discovered by Laravel. Once installed:
